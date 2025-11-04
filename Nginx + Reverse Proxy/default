@@ -6,7 +6,7 @@ server {
     root /var/www/html;
     index index.html index.php;
 
-    # Reverse proxy /golang-app
+    # Reverse proxy untuk Golang app
     location /golang-app/ {
         proxy_pass http://localhost:8080/;
         proxy_set_header Host $host;
@@ -16,11 +16,11 @@ server {
         access_log /var/log/nginx/golang.log main;
     }
 
-    # Laravel /laravel
+    # Laravel
     location /laravel {
         alias /var/www/html/laravel/public;
-        try_files $uri $uri/ @perpus;
-        
+        try_files $uri $uri/ @laravel;
+
         access_log /var/log/nginx/laravel.log main;
 
         location ~ \.php$ {
@@ -35,7 +35,6 @@ server {
     }
 
     location @laravel {
-        rewrite /perpus/(.*)$ /laravel/index.php?$1 last;
+        rewrite ^/laravel/(.*)$ /laravel/index.php?$1 last;
     }
-
 }
