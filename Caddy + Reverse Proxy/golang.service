@@ -3,6 +3,7 @@ Description=Golang Service
 After=network.target
 
 [Service]
+Environment="TERM=ansi"
 User=root
 Group=root
 WorkingDirectory=/root/project/golang
