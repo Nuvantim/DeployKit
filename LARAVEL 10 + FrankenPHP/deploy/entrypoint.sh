@@ -5,6 +5,7 @@ set -e
 if [ ! -f /app/.installed ]; then
     echo "Running first-time installation..."
     touch /app/.installed
+    chmod +x /app/install.sh
     sh /app/install.sh
 
     # Create group www-data
@@ -13,11 +14,11 @@ if [ ! -f /app/.installed ]; then
     # Set Permission
     chown -R www-data:www-data /app
     chmod -R 775 /app/public /app/storage /app/bootstrap/cache
-    chmod +x /app/install.sh
+    apk del php83*
 fi
 
 # Create Path Frankenphp
-export PATH=$PATH:/usr/local/frankenphp
+export PATH=$PATH:/usr/bin
 
 # Start Frankenphp
 exec franken php-server --root /app/public --listen :80
